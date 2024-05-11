@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
     // await roomdb.createRoom(roomName, socket.id)
   });
 
-  socket.on("licensing", async (roomName) => {
+  socket.on("flop", async (roomName) => {
     const manager = new CardController(io, roomName);
     manager.start();
   });
