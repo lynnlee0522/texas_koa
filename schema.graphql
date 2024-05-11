@@ -1,0 +1,9 @@
+type Query {
+  rooms: [Room]
+}
+
+type Room {
+  _id: ID
+  roomName: String
+  numbers: [String]
+}
