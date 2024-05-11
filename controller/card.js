@@ -94,9 +94,7 @@ class CardController {
   registerEvent = async () => {
     const sockets = await this.io.in(this.roomName).fetchSockets();
     for (const socket of sockets) {
-      socket.on("flopTable", () =>
-        this.handleReceiveMessage("flopTable")
-      );
+      socket.on("flopTable", () => this.handleReceiveMessage("flopTable"));
       socket.on("turn", () => this.handleReceiveMessage("turn"));
       socket.on("river", () => this.handleReceiveMessage("river"));
       socket.on("restart", () => this.handleReceiveMessage("restart"));
@@ -138,14 +136,16 @@ class CardController {
   };
 
   flop = async () => {
-    console.log("---44-4--", this.roomName);
     // 获取room中所有的socket, 变成一个数组
     this.card.shuffleArray();
-    const clients = [...this.io.sockets.adapter.rooms.get(this.roomName)];
-    this.card.flop(clients);
-    clients.forEach((clientId) => {
-      this.io.to(clientId).emit("flop", this.buildSendMessage(clientId));
-    });
+    const users = this.io.sockets.adapter.rooms?.get(this.roomName);
+    if (users) {
+      const clients = [...users];
+      this.card.flop(clients);
+      clients.forEach((clientId) => {
+        this.io.to(clientId).emit("flop", this.buildSendMessage(clientId));
+      });
+    }
   };
 
   flopTable = () => {
