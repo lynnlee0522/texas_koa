@@ -17,7 +17,7 @@ const httpServer = createServer(app.callback());
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: ["http://localhost:3002", "https://texas-front.pages.dev"],
   },
 });
 
