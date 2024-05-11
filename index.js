@@ -28,7 +28,6 @@ io.on('connection', (socket) => {
 
     const rc = new RoomController(io);
     const rooms = rc.getRooms()
-    console.log("---rooms---", rooms);
 
     // Todo: 监听客户端创建房间的事件
 
@@ -36,13 +35,19 @@ io.on('connection', (socket) => {
     socket.on('joinRoom', async (roomName, callback) => {
         socket.join(roomName);
         callback(roomName);
-        await roomdb.joinRoom(roomName, socket.id)
+        // await roomdb.joinRoom(roomName, socket.id)
     });
 
     socket.on('createRoom', async (roomName, callback) => {
         socket.join(roomName);
         callback(roomName);
-        await roomdb.createRoom(roomName, socket.id)
+        // await roomdb.createRoom(roomName, socket.id)
+    });
+
+    socket.on('leaveRoom', async (roomName, callback) => {
+        socket.leave(roomName);
+        callback(roomName);
+        // await roomdb.createRoom(roomName, socket.id)
     });
 
     socket.on('licensing', async (roomName) => {

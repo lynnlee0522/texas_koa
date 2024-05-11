@@ -60,7 +60,6 @@ class RoomDB extends BaseDB {
             // 连接到 MongoDB
             await this.client.connect();
             const result = await this.collection.find({}).toArray()
-            console.log("--result--", result);
             return result
         } catch (error) {
             console.error('Error joinRoom:', error);
